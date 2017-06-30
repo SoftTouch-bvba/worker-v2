@@ -13,16 +13,17 @@ class WorkerHello implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public $requestId;
+    public $message;
 
     /**
      * Create a new job instance.
      *
+     * @param  string  $message  the message
      * @return void
      */
-    public function __construct($requestId)
+    public function __construct($message = null)
     {
-        $this->requestId = $requestId;
+        $this->message = $message;
     }
 
     /**
@@ -32,6 +33,7 @@ class WorkerHello implements ShouldQueue
      */
     public function handle()
     {
-        Log::info('Request id: ' . $this->requestId);
+        Log::info('Unique id: ' . $this->job->getJobId());
+        Log::info('Message: ' . $this->message);
     }
 }
